@@ -20,4 +20,10 @@ export default StyleSheet.create({
   movieTitle: {
     fontSize: 18,
   },
+  movieImage: {
+    width: 100,
+    height: 150,
+    borderRadius: 8,
+    marginRight: 16,
+  },
 });
