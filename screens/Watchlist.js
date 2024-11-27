@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text } from "react-native";
 import styles from "../styles";
 
-export default function Home() {
+export default function Watchlist() {
   return (
     <View style={styles.container}>
-      <Text>Placeholder Content</Text>
+      <Text>Watchlist Content</Text>
     </View>
   );
 }
