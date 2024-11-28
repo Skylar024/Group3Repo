@@ -56,7 +56,7 @@ export default function Home() {
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={styles.row}
-            contentContainerStyle={{ paddingBottom: 20 }} // Extra space at the bottom
+            contentContainerStyle={{ paddingBottom: 20 }}
             renderItem={({ item }) => (
               <View style={styles.movieItem}>
                 <Image

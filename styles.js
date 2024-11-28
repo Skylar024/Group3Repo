@@ -58,7 +58,7 @@ export default StyleSheet.create({
   movieItem: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "rgba(54, 54, 54, 0.5)", // Transparent bg for each row
+    backgroundColor: "rgba(54, 54, 54, 0.5)",
     borderRadius: 15,
     margin: 5,
     padding: 8,
@@ -100,13 +100,13 @@ export default StyleSheet.create({
     fontWeight: "bold",
     color: "#767f88",
     textAlign: "center",
-    marginBottom: 20, // Added space below the title
+    marginBottom: 20,
   },
 
   movieItem: {
     marginBottom: 8,
     padding: 8,
-    backgroundColor: "rgba(54,54,54, 0.5)", // Transparent background for each row
+    backgroundColor: "rgba(54, 54, 54, 0.5)", // Transparent background for each row
     borderRadius: 15,
     maxWidth: 125,
     alignItems: "center",
