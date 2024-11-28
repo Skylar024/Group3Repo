@@ -5,18 +5,14 @@ import { getTopTenMovies, getTwoMovies } from "../api";
 import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-// let movieArray = [];
-
 export default function Home() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     async function fetchMovies() {
       const topMovies = await getTopTenMovies();
-      const twoMovies = await getTwoMovies();
-      const allMovies = [...topMovies, ...twoMovies];
-      console.log("Movies Array Length:", allMovies.length);
-      setMovies(allMovies);
+      console.log("Movies Array Length:", topMovies.length);
+      setMovies(topMovies);
     }
 
     fetchMovies();
@@ -37,6 +33,9 @@ export default function Home() {
         style={styles.gradient}
       >
         <Text style={styles.topTenTitle}>Top 10 Movies</Text>
+
+        {/* Search */}
+
         <View style={styles.searchAndFilterContainer}>
           <View style={styles.searchBox}>
             <TextInput
@@ -49,6 +48,8 @@ export default function Home() {
             <Text style={styles.darkText}>≡</Text>
           </View>
         </View>
+
+        {/* Top 10 List */}
 
         <View style={styles.movieListContainer}>
           <FlatList
