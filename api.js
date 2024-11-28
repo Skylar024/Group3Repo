@@ -35,8 +35,7 @@ export async function getTwoMovies() {
 
     const data = await response.json();
 
-    return data.results.slice(6, 10);
-
+    return data.results.slice(6, 11);
 
     // for (const key in data.results) {
     //   console.log(`${key}: ${data.results[key]}`)
@@ -47,14 +46,12 @@ export async function getTwoMovies() {
     //   console.log(`${key}: ${data[key]}`)
 
     // }
-      // let twoMovies = data.results.slice(x*2, (x*2)+2);
-      // let movieArray = movieArray + twoMovies;
-      // console.log(x.results)
-    
+    // let twoMovies = data.results.slice(x*2, (x*2)+2);
+    // let movieArray = movieArray + twoMovies;
+    // console.log(x.results)
 
     //console.log(movieArray)
     //return movieArray;
-
   } catch (error) {
     console.error("Error fetching movies:", error);
     return [];

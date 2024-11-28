@@ -5,9 +5,6 @@ export default StyleSheet.create({
   wrapper: {
     backgroundColor: "#21252b",
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    
   },
   bodyContainer: {
     flex: 1,
@@ -20,8 +17,7 @@ export default StyleSheet.create({
     paddingTop: 30,
 
     ...Platform.select({
-      ios: { marginTop: 30,
-      },
+      ios: { marginTop: 30 },
       android: { marginTop: StatusBar.currentHeight },
       web: {
         marginTop: 25,
@@ -29,46 +25,67 @@ export default StyleSheet.create({
     }),
   },
   searchAndFilterContainer: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "stretch",
-    marginVertical: 15,
-
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
   },
   searchBox: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#767f88",
     height: 50,
     borderRadius: 15,
-    marginLeft: 30,
-
+    paddingHorizontal: 10,
+    justifyContent: "center",
   },
   filterContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    marginLeft: 15,
     backgroundColor: "#767f88",
     height: 50,
-    maxWidth: 50,
+    width: 50,
     borderRadius: 15,
-    marginHorizontal: 30,
-
+    justifyContent: "center",
+    alignItems: "center",
   },
   movieContainer: {
-    flex: 1,
-    flexDirection: "row",
-    flexGrow: 10,
-    //width: "100%",
-
+    paddingHorizontal: 10,
   },
-  
+  row: {
+    justifyContent: "space-between",
+    paddingHorizontal: 5,
+    marginBottom: 20,
+  },
+  movieItem: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "rgba(54, 54, 54, 0.5)", // Transparent bg for each row
+    borderRadius: 15,
+    margin: 5,
+    padding: 8,
+    maxWidth: 150,
+  },
+  movieImage: {
+    height: 150,
+    width: 100,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "white",
+  },
+  movieTitle: {
+    marginTop: 5,
+    textAlign: "center",
+    color: "white",
+    fontSize: 14,
+  },
+
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  movieListContainer: {
+    flex: 1,
+    marginTop: 10,
   },
 
   // Text Styles
@@ -82,18 +99,18 @@ export default StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "#767f88",
-    alignSelf: "center",
+    textAlign: "center",
+    marginBottom: 20, // Added space below the title
   },
+
   movieItem: {
     marginBottom: 8,
     padding: 8,
-    backgroundColor: "rgba(54,54,54, 0.5)", //Transparent background for eahc row
+    backgroundColor: "rgba(54,54,54, 0.5)", // Transparent background for each row
     borderRadius: 15,
     maxWidth: 125,
     alignItems: "center",
     marginLeft: 30,
-
-
   },
   movieTitle: {
     fontSize: 14,
@@ -103,14 +120,11 @@ export default StyleSheet.create({
     width: 100,
     borderRadius: 8,
     borderWidth: 2,
-
   },
   gradient: {
     flex: 1,
     width: "100%",
     height: "100%",
     borderRadius: 35,
-    
   },
-  
 });
