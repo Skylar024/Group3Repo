@@ -1,38 +1,130 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform, StatusBar } from "react-native";
 
 export default StyleSheet.create({
+  // Containers
+  wrapper: {
+    backgroundColor: "#21252b",
+    flex: 1,
+  },
+  bodyContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "#12161a",
+    width: "90%",
+    borderRadius: 35,
+    paddingTop: 30,
+
+    ...Platform.select({
+      ios: { marginTop: 30 },
+      android: { marginTop: StatusBar.currentHeight },
+      web: {
+        marginTop: 25,
+      },
+    }),
+  },
+  searchAndFilterContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  searchBox: {
+    flex: 1,
+    backgroundColor: "#767f88",
+    height: 50,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+  },
+  filterContainer: {
+    marginLeft: 15,
+    backgroundColor: "#767f88",
+    height: 50,
+    width: 50,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  movieContainer: {
+    paddingHorizontal: 10,
+  },
+  row: {
+    justifyContent: "space-between",
+    paddingHorizontal: 5,
+    marginBottom: 20,
+  },
+  movieItem: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "rgba(54, 54, 54, 0.5)",
+    borderRadius: 15,
+    margin: 5,
+    padding: 8,
+    maxWidth: 150,
+  },
+  movieImage: {
+    height: 150,
+    width: 100,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "white",
+  },
+  movieTitle: {
+    marginTop: 5,
+    textAlign: "center",
+    color: "white",
+    fontSize: 14,
+  },
+
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  listContainer: {
+  movieListContainer: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 40,
+    marginTop: 10,
   },
 
-  item: {
-    margin: 5,
-    padding: 5,
-    color: "slategrey",
-    backgroundColor: "ghostwhite",
+  // Text Styles
+  darkText: {
+    color: "black",
+  },
+  lightText: {
+    color: "ghostwhite",
+  },
+  topTenTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#767f88",
     textAlign: "center",
+    marginBottom: 20,
   },
 
-  filter: {
-    height: 40,
-    width: 200,
-  },
-
-  controls: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+  movieItem: {
+    marginBottom: 8,
+    padding: 8,
+    backgroundColor: "rgba(54, 54, 54, 0.5)", // Transparent background for each row
+    borderRadius: 15,
+    maxWidth: 125,
     alignItems: "center",
-    padding: 10,
-    backgroundColor: "white",
+    marginLeft: 30,
+  },
+  movieTitle: {
+    fontSize: 14,
+  },
+  movieImage: {
+    height: 150,
+    width: 100,
+    borderRadius: 8,
+    borderWidth: 2,
+  },
+  gradient: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    borderRadius: 35,
   },
 });
