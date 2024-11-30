@@ -34,21 +34,6 @@ export default function TopTen() {
       >
         <Text style={styles.topTenTitle}>Top 10 Movies</Text>
 
-        {/* Search */}
-
-        <View style={styles.searchAndFilterContainer}>
-          <View style={styles.searchBox}>
-            <TextInput
-              style={styles.darkText}
-              placeholder="Search"
-              placeholderTextColor="black"
-            />
-          </View>
-          <View style={styles.filterContainer}>
-            <Text style={styles.darkText}>≡</Text>
-          </View>
-        </View>
-
         {/* Top 10 List */}
 
         <View style={styles.movieListContainer}>

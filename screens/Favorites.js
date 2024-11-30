@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles";
@@ -19,6 +26,18 @@ export default function Favorites() {
 
     fetchFavorites();
   }, []);
+
+  const removeFromFavorites = async (movieId) => {
+    try {
+      const updatedFavorites = favorites.filter(
+        (movie) => movie.id !== movieId
+      );
+      setFavorites(updatedFavorites);
+      await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    } catch (error) {
+      console.error("Error removing movie from favorites", error);
+    }
+  };
 
   return (
     <View style={styles.wrapper}>
@@ -54,6 +73,13 @@ export default function Favorites() {
                   style={localStyles.moviePoster}
                 />
                 <Text style={localStyles.movieTitle}>{item.title}</Text>
+                {/* Delete Button */}
+                <TouchableOpacity
+                  style={localStyles.deleteButton}
+                  onPress={() => removeFromFavorites(item.id)}
+                >
+                  <Text style={localStyles.deleteButtonText}>Delete</Text>
+                </TouchableOpacity>
               </View>
             )}
           />
@@ -83,5 +109,14 @@ const localStyles = StyleSheet.create({
     color: "gray",
     textAlign: "center",
     marginVertical: 20,
+  },
+  deleteButton: {
+    backgroundColor: "#FF6347",
+    padding: 8,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: "white",
+    fontSize: 14,
   },
 });

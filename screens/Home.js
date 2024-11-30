@@ -160,8 +160,8 @@ const localStyles = StyleSheet.create({
     marginHorizontal: 10,
   },
   moviePoster: {
-    width: 50,
-    height: 75,
+    width: 100,
+    height: 150,
     marginBottom: 10,
   },
   movieTitle: {
