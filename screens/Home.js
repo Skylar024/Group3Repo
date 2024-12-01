@@ -116,36 +116,36 @@ export default function Home() {
 
         {/* Search Results */}
         {loading ? (
-          <Text style={localStyles.loadingText}>Loading...</Text>
+          <Text style={styles.loadingText}>Loading...</Text>
         ) : (
           <FlatList
             data={movies}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={localStyles.movieItem}>
+              <View style={styles.searchMovieTitle}>
                 <Image
                   source={{
                     uri: item.poster_path
                       ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
                       : "https://via.placeholder.com/50x75?text=No+Image",
                   }}
-                  style={localStyles.moviePoster}
+                  style={styles.searchMoviePoster}
                 />
-                <Text style={localStyles.movieTitle}>{item.title}</Text>
+                <Text style={styles.searchMovieTitle}>{item.title}</Text>
 
                 {/* Button for Watchlist */}
-                <View style={localStyles.buttonsContainer}>
+                <View style={styles.buttonsContainer}>
                   <TouchableOpacity
                     onPress={() => addToWatchlist(item)}
                     style={[
-                      localStyles.watchlistButton,
+                      styles.watchlistButton,
                       watchlist.some((m) => m.id === item.id) && {
                         backgroundColor: "gray",
                       },
                     ]}
                     disabled={watchlist.some((m) => m.id === item.id)}
                   >
-                    <Text style={localStyles.buttonText}>
+                    <Text style={styles.buttonText}>
                       {watchlist.some((m) => m.id === item.id)
                         ? "In Watchlist"
                         : "Add to Watchlist"}
@@ -156,14 +156,14 @@ export default function Home() {
                   <TouchableOpacity
                     onPress={() => addToFavorites(item)}
                     style={[
-                      localStyles.favoriteButton,
+                      styles.favoriteButton,
                       favorites.some((m) => m.id === item.id) && {
                         backgroundColor: "gray",
                       },
                     ]}
                     disabled={favorites.some((m) => m.id === item.id)}
                   >
-                    <Text style={localStyles.buttonText}>
+                    <Text style={styles.buttonText}>
                       {favorites.some((m) => m.id === item.id)
                         ? "In Favorites"
                         : "Add to Favorites"}
@@ -174,7 +174,7 @@ export default function Home() {
             )}
             ListEmptyComponent={
               searchQuery.trim() && (
-                <Text style={localStyles.noResults}>No results found</Text>
+                <Text style={styles.noResults}>No results found</Text>
               )
             }
           />
@@ -183,56 +183,3 @@ export default function Home() {
     </View>
   );
 }
-
-// Additional styles
-const localStyles = StyleSheet.create({
-  movieItem: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginVertical: 10,
-    marginHorizontal: 10,
-  },
-  moviePoster: {
-    width: 100,
-    height: 150,
-    marginBottom: 10,
-  },
-  movieTitle: {
-    color: "white",
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  loadingText: {
-    color: "white",
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  noResults: {
-    color: "gray",
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  buttonsContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  watchlistButton: {
-    backgroundColor: "#0000ff",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    marginRight: 5,
-    marginBottom: 5,
-  },
-  favoriteButton: {
-    backgroundColor: "#ff0000",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    marginRight: 5,
-  },
-  buttonText: {
-    color: "white",
-  },
-});
