@@ -59,15 +59,27 @@ export default function Home() {
     }
   };
 
-  // Add to Watchlist
+  // Add Movie to Watchlist
   const addToWatchlist = async (movie) => {
+    // Check if the movie is already in the watchlist
+    if (watchlist.some((item) => item.id === movie.id)) {
+      console.log("Movie is already in the watchlist");
+      return;
+    }
+    // Add to Watchlist
     const newWatchlist = [...watchlist, movie];
     setWatchlist(newWatchlist);
     await AsyncStorage.setItem("watchlist", JSON.stringify(newWatchlist));
   };
 
-  // Add to Favorites
+  // Add Movie to Favorites
   const addToFavorites = async (movie) => {
+    // CHeck if the movie is already in the favorites
+    if (favorites.some((item) => item.id === movie.id)) {
+      console.log("Movie is already on your favorites.");
+      return;
+    }
+    // Add to Favorites
     const newFavorites = [...favorites, movie];
     setFavorites(newFavorites);
     await AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
@@ -125,16 +137,37 @@ export default function Home() {
                 <View style={localStyles.buttonsContainer}>
                   <TouchableOpacity
                     onPress={() => addToWatchlist(item)}
-                    style={localStyles.watchlistButton}
+                    style={[
+                      localStyles.watchlistButton,
+                      watchlist.some((m) => m.id === item.id) && {
+                        backgroundColor: "gray",
+                      },
+                    ]}
+                    disabled={watchlist.some((m) => m.id === item.id)}
                   >
-                    <Text style={localStyles.buttonText}>Add to Watchlist</Text>
+                    <Text style={localStyles.buttonText}>
+                      {watchlist.some((m) => m.id === item.id)
+                        ? "In Watchlist"
+                        : "Add to Watchlist"}
+                    </Text>
                   </TouchableOpacity>
+
                   {/* Button for Favorites */}
                   <TouchableOpacity
                     onPress={() => addToFavorites(item)}
-                    style={localStyles.favoriteButton}
+                    style={[
+                      localStyles.favoriteButton,
+                      favorites.some((m) => m.id === item.id) && {
+                        backgroundColor: "gray",
+                      },
+                    ]}
+                    disabled={favorites.some((m) => m.id === item.id)}
                   >
-                    <Text style={localStyles.buttonText}>Add to Favorites</Text>
+                    <Text style={localStyles.buttonText}>
+                      {favorites.some((m) => m.id === item.id)
+                        ? "In Favorites"
+                        : "Add to Favorites"}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
