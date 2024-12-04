@@ -88,6 +88,60 @@ export default StyleSheet.create({
     marginTop: 10,
   },
 
+  // Search Styles
+  searchMovieItem: {
+    flexDirection: "column",
+    alignItems: "center",
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  searchMoviePoster: {
+    width: 100,
+    height: 150,
+    marginBottom: 10,
+    alignSelf: "center",
+  },
+  searchMovieTitle: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  loadingText: {
+    color: "white",
+    textAlign: "center",
+    marginVertical: 20,
+  },
+  noResults: {
+    color: "gray",
+    textAlign: "center",
+    marginVertical: 20,
+  },
+
+  // Button Styles
+  buttonsContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  watchlistButton: {
+    backgroundColor: "#0000ff",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginRight: 5,
+    marginBottom: 5,
+  },
+  favoriteButton: {
+    backgroundColor: "#ff0000",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginRight: 5,
+  },
+  buttonText: {
+    color: "white",
+  },
+
   // Text Styles
   darkText: {
     color: "black",
