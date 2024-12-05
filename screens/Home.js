@@ -12,6 +12,7 @@ import styles from "../styles";
 import { LinearGradient } from "expo-linear-gradient";
 import { searchMovies } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,6 +22,9 @@ export default function Home() {
   // Get Watchlist and Favorites
   const [watchlist, setWatchlist] = useState([]);
   const [favorites, setFavorites] = useState([]);
+
+  // Use Navigation
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Fetch the current watchlist and favorite movies
@@ -74,7 +78,7 @@ export default function Home() {
 
   // Add Movie to Favorites
   const addToFavorites = async (movie) => {
-    // CHeck if the movie is already in the favorites
+    // Check if the movie is already in the favorites
     if (favorites.some((item) => item.id === movie.id)) {
       console.log("Movie is already on your favorites.");
       return;
@@ -123,15 +127,21 @@ export default function Home() {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.searchMovieTitle}>
-                <Image
-                  source={{
-                    uri: item.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                      : "https://via.placeholder.com/50x75?text=No+Image",
-                  }}
-                  style={styles.searchMoviePoster}
-                />
-                <Text style={styles.searchMovieTitle}>{item.title}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("MovieDetail", { movie: item })
+                  }
+                >
+                  <Image
+                    source={{
+                      uri: item.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                        : "https://via.placeholder.com/50x75?text=No+Image",
+                    }}
+                    style={styles.searchMoviePoster}
+                  />
+                  <Text style={styles.searchMovieTitle}>{item.title}</Text>
+                </TouchableOpacity>
 
                 {/* Button for Watchlist */}
                 <View style={styles.buttonsContainer}>
