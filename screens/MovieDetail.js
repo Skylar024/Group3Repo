@@ -14,6 +14,7 @@ export default function MovieDetails({ route }) {
             : "https://via.placeholder.com/500x750?text=No+Image",
         }}
         style={localStyles.poster}
+        resizeMode="contain"
       />
       <Text style={localStyles.title}>{movie.title}</Text>
       <Text style={localStyles.releaseDate}>
