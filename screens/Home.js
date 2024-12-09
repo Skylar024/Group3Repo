@@ -2,32 +2,28 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  FlatList,
-  TextInput,
   Image,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import styles from "../styles";
 import { LinearGradient } from "expo-linear-gradient";
-import { searchMovies } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Swiper from "react-native-deck-swiper";
+import { allMovies } from "../api";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Get Watchlist and Favorites
   const [watchlist, setWatchlist] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
-  // Use Navigation
   const navigation = useNavigation();
 
   useEffect(() => {
-    // Fetch the current watchlist and favorite movies
+
     const fetchLists = async () => {
       try {
         const storedWatchlist = await AsyncStorage.getItem("watchlist");
@@ -39,55 +35,60 @@ export default function Home() {
       }
     };
 
-    fetchLists();
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const fetchedMovies = await allMovies();
+        setMovies(fetchedMovies);
+
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLists(),fetchData();
   }, []);
 
-  // Search Function
-  const handleSearch = async (query) => {
-    setSearchQuery(query);
-
-    if (query.trim().length === 0) {
-      setMovies([]);
+  const addToWatchlist = async (movie) => {
+    if (watchlist.some((item) => item.id === movie.id)) {
+      console.log("Movie already in Watchlist");
       return;
     }
-
-    setLoading(true);
 
     try {
-      const results = await searchMovies(query);
-      setMovies(results);
+      const updatedWatchlist = [...watchlist, movie];
+      setWatchlist([...updatedWatchlist]); // Forcing re-render
+      await AsyncStorage.setItem("watchlist", JSON.stringify(updatedWatchlist));
+      console.log("Added to Watchlist:", movie.title);
     } catch (error) {
-      console.error("Error in search:", error);
-    } finally {
-      setLoading(false);
+      console.error("Error adding to Watchlist:", error);
     }
   };
 
-  // Add Movie to Watchlist
-  const addToWatchlist = async (movie) => {
-    // Check if the movie is already in the watchlist
-    if (watchlist.some((item) => item.id === movie.id)) {
-      console.log("Movie is already in the watchlist");
-      return;
-    }
-    // Add to Watchlist
-    const newWatchlist = [...watchlist, movie];
-    setWatchlist(newWatchlist);
-    await AsyncStorage.setItem("watchlist", JSON.stringify(newWatchlist));
-  };
-
-  // Add Movie to Favorites
   const addToFavorites = async (movie) => {
-    // Check if the movie is already in the favorites
     if (favorites.some((item) => item.id === movie.id)) {
-      console.log("Movie is already on your favorites.");
+      console.log("Movie already in Favorites");
       return;
     }
-    // Add to Favorites
-    const newFavorites = [...favorites, movie];
-    setFavorites(newFavorites);
-    await AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
+
+    try {
+      const updatedFavorites = [...favorites, movie];
+      setFavorites([...updatedFavorites]); // Forcing re-render
+      await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      console.log("Added to Favorites:", movie.title);
+    } catch (error) {
+      console.error("Error adding to Favorites:", error);
+    }
   };
+
+  const isInWatchlist = (movie) =>
+    watchlist.some((item) => item.id === movie.id);
+
+  const isInFavorites = (movie) =>
+    favorites.some((item) => item.id === movie.id);
 
   return (
     <View style={styles.wrapper}>
@@ -103,78 +104,60 @@ export default function Home() {
         ]}
         style={styles.gradient}
       >
-        <Text style={styles.topTenTitle}>Search Movies</Text>
+        <Text style={styles.topTenTitle}>Swipe Movies, are you ready?</Text>
 
-        {/* Search Input */}
-        <View style={styles.searchAndFilterContainer}>
-          <View style={styles.searchBox}>
-            <TextInput
-              style={styles.darkText}
-              placeholder="Search for movies"
-              placeholderTextColor="black"
-              value={searchQuery}
-              onChangeText={handleSearch}
-            />
-          </View>
-        </View>
-
-        {/* Search Results */}
         {loading ? (
-          <Text style={styles.loadingText}>Loading...</Text>
-        ) : (
-          <FlatList
-            data={movies}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.searchMovieTitle}>
+          <ActivityIndicator size="large" color="yellow" />
+        ) : movies.length > 0 ? (
+          <Swiper
+            cards={movies}
+            renderCard={(movie) => (
+              <View style={localStyles.card}>
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("MovieDetail", { movie: item })
+                    navigation.navigate("MovieDetail", { movie: movie })
                   }
                 >
                   <Image
                     source={{
-                      uri: item.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                        : "https://via.placeholder.com/50x75?text=No+Image",
+                      uri: movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : "https://via.placeholder.com/300x450?text=No+Image",
                     }}
-                    style={styles.searchMoviePoster}
+                    style={localStyles.poster}
                   />
-                  <Text style={styles.searchMovieTitle}>{item.title}</Text>
                 </TouchableOpacity>
+                <Text style={localStyles.title}>{movie.title}</Text>
+                <Text style={localStyles.overview}>{movie.overview}</Text>
 
-                {/* Button for Watchlist */}
-                <View style={styles.buttonsContainer}>
+                <View style={localStyles.buttonsContainer}>
+                  {/* Watchlist Button */}
                   <TouchableOpacity
-                    onPress={() => addToWatchlist(item)}
+                    onPress={() => addToWatchlist(movie)}
                     style={[
-                      styles.watchlistButton,
-                      watchlist.some((m) => m.id === item.id) && {
-                        backgroundColor: "gray",
-                      },
+                      localStyles.watchlistButton,
+                      isInWatchlist(movie) && localStyles.disabledButton,
                     ]}
-                    disabled={watchlist.some((m) => m.id === item.id)}
+                    disabled={isInWatchlist(movie)}
                   >
-                    <Text style={styles.buttonText}>
-                      {watchlist.some((m) => m.id === item.id)
+                    <Text style={localStyles.buttonText}>
+                      {isInWatchlist(movie)
                         ? "In Watchlist"
                         : "Add to Watchlist"}
                     </Text>
                   </TouchableOpacity>
 
-                  {/* Button for Favorites */}
+                  {/* Favorites Button */}
                   <TouchableOpacity
-                    onPress={() => addToFavorites(item)}
+                    onPress={() => addToFavorites(movie)}
                     style={[
-                      styles.favoriteButton,
-                      favorites.some((m) => m.id === item.id) && {
-                        backgroundColor: "gray",
-                      },
+                      localStyles.favoriteButton,
+                      isInFavorites(movie) && localStyles.disabledButton,
                     ]}
-                    disabled={favorites.some((m) => m.id === item.id)}
+                    disabled={isInFavorites(movie)}
                   >
-                    <Text style={styles.buttonText}>
-                      {favorites.some((m) => m.id === item.id)
+                    <Text style={localStyles.buttonText}>
+                      {isInFavorites(movie)
                         ? "In Favorites"
                         : "Add to Favorites"}
                     </Text>
@@ -182,14 +165,80 @@ export default function Home() {
                 </View>
               </View>
             )}
-            ListEmptyComponent={
-              searchQuery.trim() && (
-                <Text style={styles.noResults}>No results found</Text>
-              )
-            }
+            cardIndex={0}
+            backgroundColor="#14161a"
+            stackSize={3}
           />
+        ) : (
+          <Text style={styles.noResults}>No movies to display</Text>
         )}
       </LinearGradient>
     </View>
   );
 }
+
+const localStyles = StyleSheet.create({
+  card: {
+    flex: 1,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#117b36",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    marginTop: -50,
+  },
+  poster: {
+    width: 300,
+    height: 400,
+    borderRadius: 8,
+    marginTop: -100,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  overview: {
+    fontSize: 14,
+    color: "#ccc",
+    textAlign: "center",
+    paddingHorizontal: 10,
+    marginBottom: 50,
+  },
+  buttonsContainer: {
+    position: "absolute",
+    bottom: 130,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  watchlistButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#1cc859",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  favoriteButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#f44336",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 14,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  disabledButton: {
+    backgroundColor: "gray",
+    opacity: 0.7,
+  },
+});
