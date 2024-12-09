@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,26 +6,34 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
 import styles from "../styles";
 
 export default function Watchlist() {
   const [watchlist, setWatchlist] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchWatchlist = async () => {
-      try {
-        const storedWatchlist = await AsyncStorage.getItem("watchlist");
-        setWatchlist(storedWatchlist ? JSON.parse(storedWatchlist) : []);
-      } catch (error) {
-        console.error("Error loading watchlist", error);
-      }
-    };
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchWatchlist = async () => {
+        setLoading(true);
+        try {
+          const storedWatchlist = await AsyncStorage.getItem("watchlist");
+          setWatchlist(storedWatchlist ? JSON.parse(storedWatchlist) : []);
+        } catch (error) {
+          console.error("Error loading watchlist", error);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchWatchlist();
-  }, []);
+      fetchWatchlist();
+    }, [])
+  );
 
   const removeFromWatchlist = async (movieId) => {
     try {
@@ -38,6 +46,14 @@ export default function Watchlist() {
       console.error("Error removing movie from watchlist", error);
     }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.wrapper}>
+        <ActivityIndicator size="large" color="yellow" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.wrapper}>
@@ -55,7 +71,6 @@ export default function Watchlist() {
       >
         <Text style={styles.topTenTitle}>My Watchlist</Text>
 
-        {/* Watchlist Movies */}
         {watchlist.length === 0 ? (
           <Text style={localStyles.noResults}>No movies in watchlist</Text>
         ) : (
@@ -73,7 +88,6 @@ export default function Watchlist() {
                   style={localStyles.moviePoster}
                 />
                 <Text style={localStyles.movieTitle}>{item.title}</Text>
-                {/* Delete Button */}
                 <TouchableOpacity
                   style={localStyles.deleteButton}
                   onPress={() => removeFromWatchlist(item.id)}
