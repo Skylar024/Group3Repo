@@ -212,7 +212,7 @@ const localStyles = StyleSheet.create({
   },
   buttonsContainer: {
     position: "absolute",
-    bottom: 130,
+    bottom: '15%',
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%",
