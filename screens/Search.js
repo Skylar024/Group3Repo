@@ -125,12 +125,11 @@ export default function Home() {
           <FlatList
             data={movies}
             keyExtractor={(item) => item.id.toString()}
+            numColumns={3} // 3 movies per row
             renderItem={({ item }) => (
-              <View style={styles.searchMovieTitle}>
+              <View style={styles.movieContainer}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("MovieDetail", { movie: item })
-                  }
+                  onPress={() => navigation.navigate("MovieDetail", { movie: item })}
                 >
                   <Image
                     source={{
@@ -138,12 +137,12 @@ export default function Home() {
                         ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
                         : "https://via.placeholder.com/50x75?text=No+Image",
                     }}
-                    style={styles.searchMoviePoster}
+                    style={styles.moviePoster}
                   />
-                  <Text style={styles.searchMovieTitle}>{item.title}</Text>
+                  <Text style={styles.movieTitle}>{item.title}</Text>
                 </TouchableOpacity>
 
-                {/* Button for Watchlist */}
+                {/* Buttons for Watchlist and Favorites */}
                 <View style={styles.buttonsContainer}>
                   <TouchableOpacity
                     onPress={() => addToWatchlist(item)}
@@ -162,7 +161,6 @@ export default function Home() {
                     </Text>
                   </TouchableOpacity>
 
-                  {/* Button for Favorites */}
                   <TouchableOpacity
                     onPress={() => addToFavorites(item)}
                     style={[
@@ -188,6 +186,8 @@ export default function Home() {
               )
             }
           />
+
+
         )}
       </LinearGradient>
     </View>
