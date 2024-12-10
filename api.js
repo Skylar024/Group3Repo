@@ -47,7 +47,7 @@ export async function searchMovies(query) {
 
 // List all movies function
 export async function allMovies() {
-  const totalPages = 1; 
+  const totalPages = 10; 
   const allResults = []; 
 
   try {
