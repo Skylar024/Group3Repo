@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,26 +6,34 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
 import styles from "../styles";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const storedFavorites = await AsyncStorage.getItem("favorites");
-        setFavorites(storedFavorites ? JSON.parse(storedFavorites) : []);
-      } catch (error) {
-        console.error("Error loading favorites", error);
-      }
-    };
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchFavorites = async () => {
+        setLoading(true);
+        try {
+          const storedFavorites = await AsyncStorage.getItem("favorites");
+          setFavorites(storedFavorites ? JSON.parse(storedFavorites) : []);
+        } catch (error) {
+          console.error("Error loading favorites", error);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchFavorites();
-  }, []);
+      fetchFavorites();
+    }, [])
+  );
 
   const removeFromFavorites = async (movieId) => {
     try {
@@ -38,6 +46,14 @@ export default function Favorites() {
       console.error("Error removing movie from favorites", error);
     }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.wrapper}>
+        <ActivityIndicator size="large" color="yellow" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.wrapper}>
@@ -55,7 +71,6 @@ export default function Favorites() {
       >
         <Text style={styles.topTenTitle}>My Favorites</Text>
 
-        {/* Favorites Movies */}
         {favorites.length === 0 ? (
           <Text style={localStyles.noResults}>No movies in favorites</Text>
         ) : (
@@ -73,7 +88,6 @@ export default function Favorites() {
                   style={localStyles.moviePoster}
                 />
                 <Text style={localStyles.movieTitle}>{item.title}</Text>
-                {/* Delete Button */}
                 <TouchableOpacity
                   style={localStyles.deleteButton}
                   onPress={() => removeFromFavorites(item.id)}
