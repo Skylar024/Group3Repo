@@ -48,100 +48,66 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   movieContainer: {
-    paddingHorizontal: 10,
+    flex: 1, 
+    alignItems: "center", 
+    justifyContent: "space-between", 
+    margin: 10, 
+    backgroundColor: "rgba(0, 0, 0, 0.5)" ,
+    padding: 10, 
+    borderRadius: 8, 
   },
-  row: {
-    justifyContent: "space-between",
-    paddingHorizontal: 5,
-    marginBottom: 20,
-  },
-  movieItem: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "rgba(54, 54, 54, 0.5)",
-    borderRadius: 15,
-    margin: 5,
-    padding: 8,
-    maxWidth: 150,
-  },
-  movieImage: {
-    height: 150,
-    width: 100,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: "white",
+  moviePoster: {
+    width: 100, 
+    height: 150, 
+    marginBottom: 5,
+    alignSelf:"center",
   },
   movieTitle: {
-    marginTop: 5,
-    textAlign: "center",
     color: "white",
     fontSize: 14,
-  },
-
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  movieListContainer: {
-    flex: 1,
-    marginTop: 10,
-  },
-
-  // Search Styles
-  searchMovieItem: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginVertical: 10,
-    marginHorizontal: 10,
-  },
-  searchMoviePoster: {
-    width: 100,
-    height: 150,
-    marginBottom: 10,
-    alignSelf: "center",
-  },
-  searchMovieTitle: {
-    color: "white",
-    fontSize: 16,
     textAlign: "center",
-    marginBottom: 10,
+    marginBottom: 5,
   },
   loadingText: {
     color: "white",
+    fontSize: 20,
     textAlign: "center",
-    marginVertical: 20,
   },
   noResults: {
-    color: "gray",
+    color: "white",
+    fontSize: 20,
     textAlign: "center",
-    marginVertical: 20,
   },
-
-  // Button Styles
   buttonsContainer: {
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: "column", 
+    justifyContent: "space-between", 
+    width: "100%", 
   },
   watchlistButton: {
     backgroundColor: "#0000ff",
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginRight: 5,
-    marginBottom: 5,
+    flex: 1, 
+    marginHorizontal: 5, 
+    marginBottom:7,
+    marginTop:5,
   },
   favoriteButton: {
     backgroundColor: "#ff0000",
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginRight: 5,
+    flex: 1, 
+    marginHorizontal: 5, 
   },
   buttonText: {
     color: "white",
+    fontSize: 12,
+    textAlign: "center",
   },
-
+  
+  
   // Text Styles
   darkText: {
     color: "black",
@@ -168,6 +134,7 @@ export default StyleSheet.create({
   },
   movieTitle: {
     fontSize: 14,
+    textAlign:"center",
   },
   movieImage: {
     height: 150,
