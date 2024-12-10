@@ -2,7 +2,6 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Platform } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "./screens/Home";
@@ -11,10 +10,22 @@ import Favorites from "./screens/Favorites";
 import TopTen from "./screens/TopTen";
 import Search from "./screens/Search";
 import MovieDetail from "./screens/MovieDetail";
+import { Alert, Platform } from "react-native";
+import { InfoIconWithWave } from "./infoIconWithWave";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
+
+function showInfoAlert() {
+  Alert.alert("App Info",
+    "This is a movie app to browse and manage your watchlist and favorites. The app uses the IMDB database to fetch movie data.\n\n" +
+      "For Academic Final Project\n" +
+      "Realized by: Skylar Thompson, Jacob Oswalt, Olivia Stanich & Daniel Santana\n" +
+      "Course: 50P - Fall 2024 - Hybrid Apps and Frameworks\n" +
+      "Institution: IvyTech Community College\n" +
+      "Indiana @ December 2024");
+}
 
 function HomeStack() {
   return (
@@ -48,6 +59,9 @@ const screenOptions = {
   },
   drawerActiveTintColor: "#1cc859",
   drawerInactiveTintColor: "#767f88",
+  headerRight: () => (
+    <InfoIconWithWave onPress={showInfoAlert} />
+  ),
 };
 
 export default function App() {
