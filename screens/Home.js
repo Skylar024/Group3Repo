@@ -92,87 +92,77 @@ export default function Home() {
 
   return (
     <View style={styles.wrapper}>
-      <LinearGradient
-        colors={[
-          "#14161a",
-          "#09481f",
-          "#117b36",
-          "#1cc859",
-          "#117b36",
-          "#09481f",
-          "#14161a",
-        ]}
-        style={styles.gradient}
-      >
-        <Text style={styles.topTenTitle}>Swipe Movies, are you ready?</Text>
+      
+      <Text style={styles.topTenTitle}>Swipe Movies, are you ready?</Text>
 
-        {loading ? (
-          <ActivityIndicator size="large" color="yellow" />
-        ) : movies.length > 0 ? (
-          <Swiper
-            cards={movies}
-            renderCard={(movie) => (
-              <View style={localStyles.card}>
+      {loading ? (
+        <ActivityIndicator size="large" color="yellow" />
+      ) : movies.length > 0 ? (
+        <Swiper
+          cards={movies}
+          renderCard={(movie) => (
+            <View style={localStyles.card}>
+              <Text style={styles.test}> ⓘ Swipe any Direction to view another movie!</Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("MovieDetail", { movie: movie })
+                }
+              >
+                <Image
+                  source={{
+                    uri: movie.poster_path
+                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                      : "https://via.placeholder.com/300x450?text=No+Image",
+                  }}
+                  style={localStyles.poster}
+                />
+              </TouchableOpacity>
+              <Text style={localStyles.title}>{movie.title}</Text>
+              <Text style={localStyles.overview}>{movie.overview}</Text>
+
+              <View style={localStyles.buttonsContainer}>
+                {/* Watchlist Button */}
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("MovieDetail", { movie: movie })
-                  }
+                  onPress={() => addToWatchlist(movie)}
+                  style={[
+                    localStyles.watchlistButton,
+                    isInWatchlist(movie) && localStyles.disabledButton,
+                  ]}
+                  disabled={isInWatchlist(movie)}
                 >
-                  <Image
-                    source={{
-                      uri: movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        : "https://via.placeholder.com/300x450?text=No+Image",
-                    }}
-                    style={localStyles.poster}
-                  />
+                  <Text style={localStyles.buttonText}>
+                    {isInWatchlist(movie)
+                      ? "In Watchlist"
+                      : "Add to Watchlist"}
+                  </Text>
                 </TouchableOpacity>
-                <Text style={localStyles.title}>{movie.title}</Text>
-                <Text style={localStyles.overview}>{movie.overview}</Text>
 
-                <View style={localStyles.buttonsContainer}>
-                  {/* Watchlist Button */}
-                  <TouchableOpacity
-                    onPress={() => addToWatchlist(movie)}
-                    style={[
-                      localStyles.watchlistButton,
-                      isInWatchlist(movie) && localStyles.disabledButton,
-                    ]}
-                    disabled={isInWatchlist(movie)}
-                  >
-                    <Text style={localStyles.buttonText}>
-                      {isInWatchlist(movie)
-                        ? "In Watchlist"
-                        : "Add to Watchlist"}
-                    </Text>
-                  </TouchableOpacity>
-
-                  {/* Favorites Button */}
-                  <TouchableOpacity
-                    onPress={() => addToFavorites(movie)}
-                    style={[
-                      localStyles.favoriteButton,
-                      isInFavorites(movie) && localStyles.disabledButton,
-                    ]}
-                    disabled={isInFavorites(movie)}
-                  >
-                    <Text style={localStyles.buttonText}>
-                      {isInFavorites(movie)
-                        ? "In Favorites"
-                        : "Add to Favorites"}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                {/* Favorites Button */}
+                <TouchableOpacity
+                  onPress={() => addToFavorites(movie)}
+                  style={[
+                    localStyles.favoriteButton,
+                    isInFavorites(movie) && localStyles.disabledButton,
+                  ]}
+                  disabled={isInFavorites(movie)}
+                >
+                  <Text style={localStyles.buttonText}>
+                    {isInFavorites(movie)
+                      ? "In Favorites"
+                      : "Add to Favorites"}
+                  </Text>
+                </TouchableOpacity>
               </View>
-            )}
-            cardIndex={0}
-            backgroundColor="#14161a"
-            stackSize={3}
-          />
-        ) : (
-          <Text style={styles.noResults}>No movies to display</Text>
-        )}
-      </LinearGradient>
+            </View>
+          )}
+          cardIndex={0}
+          backgroundColor="#14161a"
+          stackSize={3}
+        />
+      ) : (
+        <Text style={styles.noResults}>No movies to display</Text>
+      )}
+      
     </View>
   );
 }
@@ -183,12 +173,13 @@ const localStyles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#117b36",
+    backgroundColor: "#fecf02",
     shadowColor: "#000",
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
     marginTop: -50,
+    
   },
   poster: {
     width: 300,
@@ -199,13 +190,13 @@ const localStyles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#fff",
+    color: "black",
     textAlign: "center",
     marginBottom: 10,
   },
   overview: {
     fontSize: 14,
-    color: "#ccc",
+    color: "black",
     textAlign: "center",
     paddingHorizontal: 10,
     marginBottom: 50,
@@ -241,4 +232,5 @@ const localStyles = StyleSheet.create({
     backgroundColor: "gray",
     opacity: 0.7,
   },
+  
 });

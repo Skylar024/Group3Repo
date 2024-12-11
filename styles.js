@@ -3,7 +3,7 @@ import { StyleSheet, Platform, StatusBar } from "react-native";
 export default StyleSheet.create({
   // Containers
   wrapper: {
-    backgroundColor: "#21252b",
+    backgroundColor: "#821131", 
     flex: 1,
   },
   bodyContainer: {
@@ -11,7 +11,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#12161a",
+    backgroundColor: "#C7253E", 
     width: "90%",
     borderRadius: 35,
     paddingTop: 30,
@@ -29,10 +29,11 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
+    marginHorizontal: 15,
   },
   searchBox: {
     flex: 1,
-    backgroundColor: "#767f88",
+    backgroundColor: "#E85C0D", 
     height: 50,
     borderRadius: 15,
     paddingHorizontal: 10,
@@ -40,7 +41,7 @@ export default StyleSheet.create({
   },
   filterContainer: {
     marginLeft: 15,
-    backgroundColor: "#767f88",
+    backgroundColor: "#E85C0D", 
     height: 50,
     width: 50,
     borderRadius: 15,
@@ -54,37 +55,33 @@ export default StyleSheet.create({
     margin: 10, 
     backgroundColor: "rgba(0, 0, 0, 0.5)" ,
     padding: 10, 
-    borderRadius: 8, 
+    borderRadius: 8,
   },
   moviePoster: {
     width: 100, 
     height: 150, 
-    marginBottom: 5,
+    marginBottom: 75,
     alignSelf:"center",
   },
   movieTitle: {
-    color: "white",
+    color: "#FABC3F", 
     fontSize: 14,
     textAlign: "center",
     marginBottom: 5,
   },
   loadingText: {
-    color: "white",
+    color: "#FABC3F", 
     fontSize: 20,
     textAlign: "center",
   },
   noResults: {
-    color: "white",
+    color: "#FABC3F", 
     fontSize: 20,
     textAlign: "center",
   },
-  buttonsContainer: {
-    flexDirection: "column", 
-    justifyContent: "space-between", 
-    width: "100%", 
-  },
+  
   watchlistButton: {
-    backgroundColor: "#0000ff",
+    backgroundColor: "#FABC3F", 
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -94,7 +91,7 @@ export default StyleSheet.create({
     marginTop:5,
   },
   favoriteButton: {
-    backgroundColor: "#ff0000",
+    backgroundColor: "#C7253E", 
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -107,8 +104,6 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   
-  
-  // Text Styles
   darkText: {
     color: "black",
   },
@@ -118,7 +113,7 @@ export default StyleSheet.create({
   topTenTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#767f88",
+    color: "#FABC3F", 
     textAlign: "center",
     marginBottom: 20,
   },
@@ -126,15 +121,18 @@ export default StyleSheet.create({
   movieItem: {
     marginBottom: 8,
     padding: 8,
-    backgroundColor: "rgba(54, 54, 54, 0.5)", // Transparent background for each row
+    backgroundColor: "rgba(54, 54, 54, 0.5)", 
     borderRadius: 15,
     maxWidth: 125,
     alignItems: "center",
     marginLeft: 30,
   },
   movieTitle: {
+    color: "#FABC3F", 
     fontSize: 14,
-    textAlign:"center",
+    textAlign: "center",
+    marginTop: 50,
+    
   },
   movieImage: {
     height: 150,
@@ -148,4 +146,113 @@ export default StyleSheet.create({
     height: "100%",
     borderRadius: 35,
   },
+
+  // ================= //
+  card: {
+    flex: 1,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#117b36",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    marginTop: -50,
+  },
+  poster: {
+    width: 300,
+    height: 400,
+    borderRadius: 8,
+    marginTop: -100,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  overview: {
+    fontSize: 14,
+    color: "#ccc",
+    textAlign: "center",
+    paddingHorizontal: 10,
+    marginBottom: 50,
+  },
+  buttonsContainer: {
+    position: "absolute",
+    bottom: '15%',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "125%",
+    paddingHorizontal: 20,
+    flexWrap: "wrap",
+    
+  },
+  buttonsContainer2: {
+    position: "absolute",
+    bottom: '20%',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "150%",
+    paddingHorizontal: 20,
+    flexWrap: "wrap", 
+  },
+  
+  watchlistButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#1cc859",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  favoriteButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#f44336",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 14,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  disabledButton: {
+    backgroundColor: "gray",
+    opacity: 0.7,
+  },
+  // colors={[
+  //   "#14161a",
+  //   "#09481f", OLD Linear Gradient Color Map, keeping just incase for now
+  //   "#117b36",
+  //   "#1cc859",
+  //   "#117b36",
+  //   "#09481f",
+  //   "#14161a",
+  // ]},
+  noResults: {
+    color: "white",
+    textAlign: "center",
+    marginVertical: 20,
+  },
+  deleteButton: {
+    backgroundColor: "#FF6347",
+    padding: 8,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: "white",
+    fontSize: 14,
+  },
+  test: {
+    position: "absolute",
+    top: "5%",
+  },
+  icon: {
+    position: "absolute",
+  },
+
 });
+
