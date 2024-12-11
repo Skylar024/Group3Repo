@@ -16,6 +16,22 @@ export default function TopTen() {
   const navigation = useNavigation();
 
   useEffect(() => {
+    // Fetch the current watchlist and favorite movies
+    const fetchLists = async () => {
+      try {
+        const storedWatchlist = await AsyncStorage.getItem("watchlist");
+        const storedFavorites = await AsyncStorage.getItem("favorites");
+        setWatchlist(storedWatchlist ? JSON.parse(storedWatchlist) : []);
+        setFavorites(storedFavorites ? JSON.parse(storedFavorites) : []);
+      } catch (error) {
+        console.error("Error loading watchlist or favorites", error);
+      }
+    };
+
+    fetchLists();
+  }, []);
+
+  useEffect(() => {
     async function fetchMovies() {
       const topMovies = await getTopTenMovies();
       setMovies(topMovies);
