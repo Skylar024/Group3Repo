@@ -5,14 +5,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles";
 import { getTopTenMovies } from "../api";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function TopTen() {
   const [movies, setMovies] = useState([]);
   const [watchlist, setWatchlist] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
-    // Use Navigation
-    const navigation = useNavigation();
+  // Use Navigation
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function fetchMovies() {
@@ -23,17 +24,34 @@ export default function TopTen() {
     fetchMovies();
   }, []);
 
-  const addToWatchlist = (movie) => {
-    setWatchlist((prev) => [...prev, movie]);
+  // Add Movie to Watchlist
+  const addToWatchlist = async (movie) => {
+    // Check if the movie is already in the watchlist
+    if (watchlist.some((item) => item.id === movie.id)) {
+      console.log("Movie is already in the watchlist");
+      return;
+    }
+    // Add to Watchlist
+    const newWatchlist = [...watchlist, movie];
+    setWatchlist(newWatchlist);
+    await AsyncStorage.setItem("watchlist", JSON.stringify(newWatchlist));
   };
 
-  const addToFavorites = (movie) => {
-    setFavorites((prev) => [...prev, movie]);
+  // Add Movie to Favorites
+  const addToFavorites = async (movie) => {
+    // Check if the movie is already in the favorites
+    if (favorites.some((item) => item.id === movie.id)) {
+      console.log("Movie is already on your favorites.");
+      return;
+    }
+    // Add to Favorites
+    const newFavorites = [...favorites, movie];
+    setFavorites(newFavorites);
+    await AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
   };
 
   return (
     <View style={styles.wrapper}>
-      
       <Text style={styles.topTenTitle}>Top 10 Movies</Text>
 
       <View style={styles.movieListContainer}>
@@ -46,7 +64,9 @@ export default function TopTen() {
           renderItem={({ item }) => (
             <View style={styles.movieContainer}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("MovieDetail", { movie: item })}
+                onPress={() =>
+                  navigation.navigate("MovieDetail", { movie: item })
+                }
               >
                 <Image
                   source={{
@@ -98,7 +118,6 @@ export default function TopTen() {
           )}
         />
       </View>
-      
     </View>
   );
 }
