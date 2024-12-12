@@ -1,9 +1,23 @@
 import React from "react";
-import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Touchable,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function MovieDetail({ route }) {
   const { movie } = route.params;
+
+  const handleTMDBPress = () => {
+    const movieUrl = `https://www.themoviedb.org/movie/${movie.id}`;
+    Linking.openURL(movieUrl);
+  };
 
   return (
     <ScrollView style={localStyles.container}>
@@ -21,6 +35,11 @@ export default function MovieDetail({ route }) {
         Release Date: {movie.release_date}
       </Text>
       <Text style={localStyles.overview}>{movie.overview}</Text>
+      <TouchableOpacity onPress={handleTMDBPress}>
+        <Text style={[localStyles.link, { marginBottom: 20 }]}>
+          View on TMDB
+        </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -51,5 +70,10 @@ const localStyles = StyleSheet.create({
   overview: {
     fontSize: 16,
     color: "#ddd",
+    marginBottom: 20,
+  },
+  link: {
+    color: "#1cc859",
+    textDecorationLine: "underline",
   },
 });
