@@ -35,7 +35,7 @@ function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="HomeScreen"
         component={Home}
         options={{ headerShown: false }}
       />
@@ -52,7 +52,7 @@ function SearchStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Search"
+        name="SearchScreen"
         component={Search}
         options={{ headerShown: false }}
       />
@@ -69,7 +69,7 @@ function TopTenStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="TopTen"
+        name="TopTenScreen"
         component={TopTen}
         options={{ headerShown: false }}
       />
@@ -86,7 +86,7 @@ function WatchlistStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Watchlist"
+        name="WatchlistScreen"
         component={Watchlist}
         options={{ headerShown: false }}
       />
@@ -103,7 +103,7 @@ function FavoritesStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Favorites"
+        name="FavoritesScreen"
         component={Favorites}
         options={{ headerShown: false }}
       />
