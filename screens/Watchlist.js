@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,26 +6,38 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 
 export default function Watchlist() {
   const [watchlist, setWatchlist] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchWatchlist = async () => {
-      try {
-        const storedWatchlist = await AsyncStorage.getItem("watchlist");
-        setWatchlist(storedWatchlist ? JSON.parse(storedWatchlist) : []);
-      } catch (error) {
-        console.error("Error loading watchlist", error);
-      }
-    };
+  // Use Navigation
+  const navigation = useNavigation();
 
-    fetchWatchlist();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchWatchlist = async () => {
+        setLoading(true);
+        try {
+          const storedWatchlist = await AsyncStorage.getItem("watchlist");
+          setWatchlist(storedWatchlist ? JSON.parse(storedWatchlist) : []);
+        } catch (error) {
+          console.error("Error loading watchlist", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchWatchlist();
+    }, [])
+  );
 
   const removeFromWatchlist = async (movieId) => {
     try {
@@ -39,31 +51,31 @@ export default function Watchlist() {
     }
   };
 
+  if (loading) {
+    return (
+      <View style={styles.wrapper}>
+        <ActivityIndicator size="large" color="yellow" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.wrapper}>
-      <LinearGradient
-        colors={[
-          "#14161a",
-          "#09481f",
-          "#117b36",
-          "#1cc859",
-          "#117b36",
-          "#09481f",
-          "#14161a",
-        ]}
-        style={styles.gradient}
-      >
-        <Text style={styles.topTenTitle}>My Watchlist</Text>
+      <Text style={styles.topTenTitle}>My Watchlist</Text>
 
-        {/* Watchlist Movies */}
-        {watchlist.length === 0 ? (
-          <Text style={localStyles.noResults}>No movies in watchlist</Text>
-        ) : (
-          <FlatList
-            data={watchlist}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={localStyles.movieItem}>
+      {watchlist.length === 0 ? (
+        <Text style={styles.noResults}>No movies in watchlist</Text>
+      ) : (
+        <FlatList
+          data={watchlist}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={localStyles.movieItem}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("MovieDetail", { movie: item })
+                }
+              >
                 <Image
                   source={{
                     uri: item.poster_path
@@ -72,19 +84,19 @@ export default function Watchlist() {
                   }}
                   style={localStyles.moviePoster}
                 />
-                <Text style={localStyles.movieTitle}>{item.title}</Text>
-                {/* Delete Button */}
-                <TouchableOpacity
-                  style={localStyles.deleteButton}
-                  onPress={() => removeFromWatchlist(item.id)}
-                >
-                  <Text style={localStyles.deleteButtonText}>Delete</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          />
-        )}
-      </LinearGradient>
+              </TouchableOpacity>
+              <Text style={localStyles.movieTitle}>{item.title}</Text>
+
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => removeFromWatchlist(item.id)}
+              >
+                <Text style={styles.deleteButtonText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 }
@@ -98,25 +110,11 @@ const localStyles = StyleSheet.create({
   moviePoster: {
     width: 50,
     height: 75,
-    marginRight: 10,
+    marginHorizontal: 10,
   },
   movieTitle: {
     color: "white",
     fontSize: 16,
     flex: 1,
-  },
-  noResults: {
-    color: "gray",
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  deleteButton: {
-    backgroundColor: "#FF6347",
-    padding: 8,
-    borderRadius: 5,
-  },
-  deleteButtonText: {
-    color: "white",
-    fontSize: 14,
   },
 });

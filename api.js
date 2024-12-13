@@ -1,5 +1,5 @@
 const API_KEY = "79fdd1b44df9ec92e26bcb9a5b91237e";
-const BASE_URL = "http://api.themoviedb.org/3";
+const BASE_URL = "https://api.themoviedb.org/3";
 
 // Get Top 10 Movies
 export async function getTopTenMovies() {
@@ -44,3 +44,32 @@ export async function searchMovies(query) {
     return [];
   }
 }
+
+// List all movies function
+export async function allMovies() {
+  const totalPages = 10; 
+  const allResults = []; 
+
+  try {
+    for (let page = 1; page <= totalPages; page++) {
+      const response = await fetch(
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch movies for page ${page}`);
+      }
+
+      const data = await response.json();
+      allResults.push(...data.results); 
+    }
+
+    return allResults; 
+  } catch (error) {
+    console.error("Error listing movies:", error);
+    return []; 
+  }
+}
+
+
+

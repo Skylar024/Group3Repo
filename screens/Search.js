@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { Image } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import {
+  View,
+  Text,
+  FlatList,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import styles from "../styles";
-import { getTopTenMovies } from "../api";
-import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import { searchMovies } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
-export default function TopTen() {
+export default function Search() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Get Watchlist and Favorites
   const [watchlist, setWatchlist] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
@@ -31,14 +42,26 @@ export default function TopTen() {
     fetchLists();
   }, []);
 
-  useEffect(() => {
-    async function fetchMovies() {
-      const topMovies = await getTopTenMovies();
-      setMovies(topMovies);
+  // Search Function
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+
+    if (query.trim().length === 0) {
+      setMovies([]);
+      return;
     }
 
-    fetchMovies();
-  }, []);
+    setLoading(true);
+
+    try {
+      const results = await searchMovies(query);
+      setMovies(results);
+    } catch (error) {
+      console.error("Error in search:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Add Movie to Watchlist
   const addToWatchlist = async (movie) => {
@@ -68,15 +91,29 @@ export default function TopTen() {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.topTenTitle}>Top 10 Movies</Text>
+      <Text style={styles.topTenTitle}>Search Movies</Text>
 
-      <View style={styles.movieListContainer}>
+      {/* Search Input */}
+      <View style={styles.searchAndFilterContainer}>
+        <View style={styles.searchBox}>
+          <TextInput
+            style={styles.darkText}
+            placeholder="Search for movies"
+            placeholderTextColor="black"
+            value={searchQuery}
+            onChangeText={handleSearch}
+          />
+        </View>
+      </View>
+
+      {/* Search Results */}
+      {loading ? (
+        <Text style={styles.loadingText}>Loading...</Text>
+      ) : (
         <FlatList
           data={movies}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          numColumns={3} // 3 movies per row
           renderItem={({ item }) => (
             <View style={styles.movieContainer}>
               <TouchableOpacity
@@ -95,7 +132,10 @@ export default function TopTen() {
                 <Text style={styles.movieTitle}>{item.title}</Text>
               </TouchableOpacity>
 
-              <View style={styles.buttonsContainer}>
+              <View style={{ height: 20 }} />
+
+              {/* Buttons for Watchlist and Favorites */}
+              <View style={styles.buttonsContainer2}>
                 <TouchableOpacity
                   onPress={() => addToWatchlist(item)}
                   style={[
@@ -132,8 +172,13 @@ export default function TopTen() {
               </View>
             </View>
           )}
+          ListEmptyComponent={
+            searchQuery.trim() && (
+              <Text style={styles.noResults}>No results found</Text>
+            )
+          }
         />
-      </View>
+      )}
     </View>
   );
 }
