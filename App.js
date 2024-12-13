@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator();
 function showInfoAlert() {
   Alert.alert(
     "App Info",
-    "This is a movie app to browse and manage your watchlist and favorites. The app uses the IMDB database to fetch movie data.\n\n" +
+    "This is a movie app to browse and manage your watchlist and favorites. The app uses the TMDB database to fetch movie data.\n\n" +
       "For Academic Final Project\n" +
       "Realized by: Skylar Thompson, Jacob Oswalt, Olivia Stanich & Daniel Santana\n" +
       "Course: 50P - Fall 2024 - Hybrid Apps and Frameworks\n" +
