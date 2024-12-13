@@ -46,19 +46,19 @@ function HomeStack() {
 
 const screenOptions = {
   headerStyle: {
-    backgroundColor: "#14161a", // Header background color
+    backgroundColor: "#460000", // Header background color #8F1A00 #8a0e04
   },
-  headerTintColor: "#767f88", // Header text color
+  headerTintColor: "#FABC3F", // Header text color #dca23e
   tabBarStyle: {
-    backgroundColor: "#14161a", // Bottom tab background color
+    backgroundColor: "#460000", // Bottom tab background color
   },
-  tabBarActiveTintColor: "#1cc859",
-  tabBarInactiveTintColor: "#767f88",
+  tabBarActiveTintColor: "#FABC3F",
+  tabBarInactiveTintColor: "#8f091b",
   drawerStyle: {
-    backgroundColor: "#14161a", // Drawer background color
+    backgroundColor: "#460000", // Drawer background color
   },
-  drawerActiveTintColor: "#1cc859",
-  drawerInactiveTintColor: "#767f88",
+  drawerActiveTintColor: "#FABC3F",
+  drawerInactiveTintColor: "#8f091b",
   headerRight: () => (
     <InfoIconWithWave onPress={showInfoAlert} />
   ),

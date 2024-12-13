@@ -3,7 +3,7 @@ import { StyleSheet, Platform, StatusBar } from "react-native";
 export default StyleSheet.create({
   // Containers
   wrapper: {
-    backgroundColor: "#821131", 
+    backgroundColor: "#8f091b", 
     flex: 1,
   },
   bodyContainer: {
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     alignItems: "center", 
     justifyContent: "space-between", 
     margin: 10, 
-    backgroundColor: "rgba(0, 0, 0, 0.5)" ,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     padding: 10, 
     borderRadius: 8,
   },
@@ -80,24 +80,14 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   
-  watchlistButton: {
-    backgroundColor: "#FABC3F", 
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    flex: 1, 
-    marginHorizontal: 5, 
-    marginBottom:7,
-    marginTop:5,
-  },
-  favoriteButton: {
-    backgroundColor: "#C7253E", 
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    flex: 1, 
-    marginHorizontal: 5, 
-  },
+  // favoriteButton: {
+  //   backgroundColor: "black", 
+  //   paddingVertical: 5,
+  //   paddingHorizontal: 10,
+  //   borderRadius: 5,
+  //   flex: 1, 
+  //   marginHorizontal: 5, 
+  // },
   buttonText: {
     color: "white",
     fontSize: 12,
@@ -116,6 +106,7 @@ export default StyleSheet.create({
     color: "#FABC3F", 
     textAlign: "center",
     marginBottom: 20,
+    marginTop: 20,
   },
 
   movieItem: {
@@ -192,7 +183,7 @@ export default StyleSheet.create({
   },
   buttonsContainer2: {
     position: "absolute",
-    bottom: '20%',
+    bottom: '25%',
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "150%",
@@ -200,23 +191,71 @@ export default StyleSheet.create({
     flexWrap: "wrap", 
   },
   
-  watchlistButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: "#1cc859",
-    borderRadius: 5,
-    alignItems: "center",
+  watchlistButton: { //In Search
+    ...Platform.select({
+      ios: {
+        paddingTop: 8,
+        backgroundColor: "#B43E0E", //#1cc859
+        borderRadius: 5,
+        alignItems: "center",
+        width: "85%",
+        height: 30,
+        marginBottom: 5,
+      },
+      android: {
+        backgroundColor: "#B43E0E",
+        borderRadius: 5,
+        alignItems: "center",
+        width: "85%",
+        marginBottom: 5,
+      },
+      web: {
+        paddingVertical: 8,
+        backgroundColor: "#B43E0E",
+        borderRadius: 5,
+        alignItems: "center",
+        width: "60%",
+        height: 30,
+        marginBottom: 5,
+
+      },
+    }),
+    
+    
   },
   favoriteButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: "#f44336",
-    borderRadius: 5,
-    alignItems: "center",
+    ...Platform.select({
+      ios: { 
+        paddingTop: 9,
+        backgroundColor: "#E05F1D", //#f44336
+        borderRadius: 5,
+        alignItems: "center",
+        width: "85%",
+        height: 30,
+        
+      },
+      android: {
+        paddingTop: 9,
+        backgroundColor: "#E05F1D",
+        borderRadius: 5,
+        alignItems: "center",
+        width: "85%",
+        height: 30,
+      },
+      web: {
+        paddingTop: 8,
+        backgroundColor: "#E05F1D",
+        borderRadius: 5,
+        alignItems: "center",
+        width: "60%",
+        height: 30,
+
+      },
+    }),
   },
-  buttonText: {
-    fontSize: 14,
-    color: "#fff",
+  buttonText: { //In Search
+    fontSize: 10,
+    color: "black",
     fontWeight: "bold",
   },
   disabledButton: {
@@ -238,17 +277,19 @@ export default StyleSheet.create({
     marginVertical: 20,
   },
   deleteButton: {
-    backgroundColor: "#FF6347",
+    backgroundColor: "#E85C0D",
     padding: 8,
     borderRadius: 5,
+    marginRight: 15,
   },
   deleteButtonText: {
-    color: "white",
+    color: "black",
     fontSize: 14,
   },
-  test: {
+  test: { //Used for the Swipe message on the swipers
     position: "absolute",
     top: "5%",
+    color: "ghostwhite",
   },
   icon: {
     position: "absolute",

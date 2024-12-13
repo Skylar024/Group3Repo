@@ -38,7 +38,7 @@ export function InfoIconWithWave({ onPress }) {
         <Ionicons
           name="information-circle-outline"
           size={30}
-          color="#1cc859"
+          color="#FABC3F"
           style={styles.icon}
         />
       </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     height: 35,
     borderRadius: 25,
     marginRight:53,
-    backgroundColor: "rgba(28, 184, 89, 0.3)",
+    backgroundColor: "rgba(250, 188, 63, 0.3)",
     zIndex: -1, 
   },
   icon: {

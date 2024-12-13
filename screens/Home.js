@@ -156,7 +156,7 @@ export default function Home() {
             </View>
           )}
           cardIndex={0}
-          backgroundColor="#14161a"
+          backgroundColor="#E85C0D" // Background Color of Swiper
           stackSize={3}
         />
       ) : (
@@ -173,11 +173,11 @@ const localStyles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fecf02",
+    backgroundColor: "#730000",
     shadowColor: "#000",
-    shadowOpacity: 0.3,
+    shadowOpacity: 1,
     shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
+    shadowRadius: 15,
     marginTop: -50,
     
   },
@@ -190,20 +190,20 @@ const localStyles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "black",
+    color: "ghostwhite",
     textAlign: "center",
     marginBottom: 10,
   },
   overview: {
     fontSize: 14,
-    color: "black",
+    color: "ghostwhite",
     textAlign: "center",
     paddingHorizontal: 10,
     marginBottom: 50,
   },
   buttonsContainer: {
     position: "absolute",
-    bottom: '15%',
+    bottom: '20%',
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%",
@@ -212,20 +212,20 @@ const localStyles = StyleSheet.create({
   watchlistButton: {
     paddingVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: "#1cc859",
+    backgroundColor: "#B43E0E",
     borderRadius: 5,
     alignItems: "center",
   },
   favoriteButton: {
     paddingVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: "#f44336",
+    backgroundColor: "#E05F1D",
     borderRadius: 5,
     alignItems: "center",
   },
   buttonText: {
     fontSize: 14,
-    color: "#fff",
+    color: "black",
     fontWeight: "bold",
   },
   disabledButton: {

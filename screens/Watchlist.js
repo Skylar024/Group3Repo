@@ -97,11 +97,13 @@ const localStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 10,
+    
   },
   moviePoster: {
     width: 50,
     height: 75,
-    marginRight: 10,
+    marginHorizontal: 10,
+    
   },
   movieTitle: {
     color: "white",
