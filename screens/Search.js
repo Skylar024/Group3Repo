@@ -14,7 +14,7 @@ import { searchMovies } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Home() {
+export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -91,7 +91,6 @@ export default function Home() {
 
   return (
     <View style={styles.wrapper}>
-      
       <Text style={styles.topTenTitle}>Search Movies</Text>
 
       {/* Search Input */}
@@ -118,7 +117,9 @@ export default function Home() {
           renderItem={({ item }) => (
             <View style={styles.movieContainer}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("MovieDetail", { movie: item })}
+                onPress={() =>
+                  navigation.navigate("MovieDetail", { movie: item })
+                }
               >
                 <Image
                   source={{
@@ -175,10 +176,7 @@ export default function Home() {
             )
           }
         />
-
-
       )}
-      
     </View>
   );
 }
