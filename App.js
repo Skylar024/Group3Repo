@@ -18,14 +18,18 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 function showInfoAlert() {
-  Alert.alert("App Info",
+  Alert.alert(
+    "App Info",
     "This is a movie app to browse and manage your watchlist and favorites. The app uses the IMDB database to fetch movie data.\n\n" +
       "For Academic Final Project\n" +
       "Realized by: Skylar Thompson, Jacob Oswalt, Olivia Stanich & Daniel Santana\n" +
       "Course: 50P - Fall 2024 - Hybrid Apps and Frameworks\n" +
       "Institution: IvyTech Community College\n" +
-      "Indiana @ December 2024");
+      "Indiana @ December 2024"
+  );
 }
+
+// Screen Stacks
 
 function HomeStack() {
   return (
@@ -44,11 +48,79 @@ function HomeStack() {
   );
 }
 
+function SearchStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Search"
+        component={Search}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MovieDetail"
+        component={MovieDetail}
+        options={{ title: "Movie Details" }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function TopTenStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="TopTen"
+        component={TopTen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MovieDetail"
+        component={MovieDetail}
+        options={{ title: "Movie Details" }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function WatchlistStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Watchlist"
+        component={Watchlist}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MovieDetail"
+        component={MovieDetail}
+        options={{ title: "Movie Details" }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function FavoritesStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MovieDetail"
+        component={MovieDetail}
+        options={{ title: "Movie Details" }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const screenOptions = {
   headerStyle: {
-    backgroundColor: "#460000", // Header background color #8F1A00 #8a0e04
+    backgroundColor: "#460000", // Header background color
   },
-  headerTintColor: "#FABC3F", // Header text color #dca23e
+  headerTintColor: "#FABC3F", // Header text color
   tabBarStyle: {
     backgroundColor: "#460000", // Bottom tab background color
   },
@@ -59,9 +131,7 @@ const screenOptions = {
   },
   drawerActiveTintColor: "#FABC3F",
   drawerInactiveTintColor: "#8f091b",
-  headerRight: () => (
-    <InfoIconWithWave onPress={showInfoAlert} />
-  ),
+  headerRight: () => <InfoIconWithWave onPress={showInfoAlert} />,
 };
 
 export default function App() {
@@ -91,10 +161,10 @@ export default function App() {
           })}
         >
           <Tab.Screen name="Home" component={HomeStack} />
-          <Tab.Screen name="Search" component={Search} />
-          <Tab.Screen name="TopTen" component={TopTen} />
-          <Tab.Screen name="Watchlist" component={Watchlist} />
-          <Tab.Screen name="Favorites" component={Favorites} />
+          <Tab.Screen name="Search" component={SearchStack} />
+          <Tab.Screen name="TopTen" component={TopTenStack} />
+          <Tab.Screen name="Watchlist" component={WatchlistStack} />
+          <Tab.Screen name="Favorites" component={FavoritesStack} />
         </Tab.Navigator>
       ) : (
         <Drawer.Navigator
@@ -120,10 +190,10 @@ export default function App() {
           })}
         >
           <Drawer.Screen name="Home" component={HomeStack} />
-          <Drawer.Screen name="Search" component={Search} />
-          <Drawer.Screen name="Top Ten" component={TopTen} />
-          <Drawer.Screen name="Watchlist" component={Watchlist} />
-          <Drawer.Screen name="Favorites" component={Favorites} />
+          <Drawer.Screen name="Search" component={SearchStack} />
+          <Drawer.Screen name="Top Ten" component={TopTenStack} />
+          <Drawer.Screen name="Watchlist" component={WatchlistStack} />
+          <Drawer.Screen name="Favorites" component={FavoritesStack} />
         </Drawer.Navigator>
       )}
     </NavigationContainer>

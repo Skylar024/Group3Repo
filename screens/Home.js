@@ -156,7 +156,7 @@ export default function Home() {
             </View>
           )}
           cardIndex={0}
-          backgroundColor="#E85C0D" // Background Color of Swiper
+          backgroundColor="#E85C0D" //Background Color of Swiper
           stackSize={3}
         />
       ) : (

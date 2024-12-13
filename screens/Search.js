@@ -132,6 +132,8 @@ export default function Search() {
                 <Text style={styles.movieTitle}>{item.title}</Text>
               </TouchableOpacity>
 
+              <View style={{ height: 20 }} />
+
               {/* Buttons for Watchlist and Favorites */}
               <View style={styles.buttonsContainer2}>
                 <TouchableOpacity

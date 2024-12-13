@@ -1,9 +1,23 @@
 import React from "react";
-import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Touchable,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function MovieDetail({ route }) {
   const { movie } = route.params;
+
+  const handleTMDBPress = () => {
+    const movieUrl = `https://www.themoviedb.org/movie/${movie.id}`;
+    Linking.openURL(movieUrl);
+  };
 
   return (
     <ScrollView style={localStyles.container}>
@@ -21,6 +35,11 @@ export default function MovieDetail({ route }) {
         Release Date: {movie.release_date}
       </Text>
       <Text style={localStyles.overview}>{movie.overview}</Text>
+      <TouchableOpacity onPress={handleTMDBPress}>
+        <Text style={[localStyles.link, { marginBottom: 20 }]}>
+          View on TMDB
+        </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -28,7 +47,7 @@ export default function MovieDetail({ route }) {
 const localStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#14161a",
+    backgroundColor: "#730000",
     padding: 20,
   },
   poster: {
@@ -40,7 +59,7 @@ const localStyles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#1cc859",
+    color: "#FABC3F",
     marginBottom: 10,
   },
   releaseDate: {
@@ -51,5 +70,10 @@ const localStyles = StyleSheet.create({
   overview: {
     fontSize: 16,
     color: "#ddd",
+    marginBottom: 20,
+  },
+  link: {
+    color: "#FABC3F",
+    textDecorationLine: "underline",
   },
 });

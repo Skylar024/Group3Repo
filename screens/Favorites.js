@@ -11,11 +11,15 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Use Navigation
+  const navigation = useNavigation();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -57,7 +61,6 @@ export default function Favorites() {
 
   return (
     <View style={styles.wrapper}>
-      
       <Text style={styles.topTenTitle}>My Favorites</Text>
 
       {favorites.length === 0 ? (
@@ -68,15 +71,22 @@ export default function Favorites() {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View style={localStyles.movieItem}>
-              <Image
-                source={{
-                  uri: item.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                    : "https://via.placeholder.com/50x75?text=No+Image",
-                }}
-                style={localStyles.moviePoster}
-              />
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("MovieDetail", { movie: item })
+                }
+              >
+                <Image
+                  source={{
+                    uri: item.poster_path
+                      ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                      : "https://via.placeholder.com/50x75?text=No+Image",
+                  }}
+                  style={localStyles.moviePoster}
+                />
+              </TouchableOpacity>
               <Text style={localStyles.movieTitle}>{item.title}</Text>
+
               <TouchableOpacity
                 style={styles.deleteButton}
                 onPress={() => removeFromFavorites(item.id)}
@@ -87,7 +97,6 @@ export default function Favorites() {
           )}
         />
       )}
-      
     </View>
   );
 }
@@ -108,5 +117,4 @@ const localStyles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
   },
-  
 });
