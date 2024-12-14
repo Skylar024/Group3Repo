@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import styles from "../styles";
-import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Swiper from "react-native-deck-swiper";
 import { allMovies } from "../api";
@@ -20,10 +19,11 @@ export default function Home() {
   const [watchlist, setWatchlist] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
+  // Use Navigation
   const navigation = useNavigation();
 
   useEffect(() => {
-
+    // Fetch the current watchlist and favorite movies
     const fetchLists = async () => {
       try {
         const storedWatchlist = await AsyncStorage.getItem("watchlist");
@@ -35,13 +35,12 @@ export default function Home() {
       }
     };
 
+    // Fetch Top Movies
     const fetchData = async () => {
       setLoading(true);
       try {
         const fetchedMovies = await allMovies();
         setMovies(fetchedMovies);
-
-        
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -49,34 +48,37 @@ export default function Home() {
       }
     };
 
-    fetchLists(),fetchData();
+    fetchLists(), fetchData();
   }, []);
 
+  // Add Movie to Watchlist
   const addToWatchlist = async (movie) => {
+    // Check if the movie is already in the watchlist
     if (watchlist.some((item) => item.id === movie.id)) {
       console.log("Movie already in Watchlist");
       return;
     }
-
+    // Add to Watchlist
     try {
       const updatedWatchlist = [...watchlist, movie];
-      setWatchlist([...updatedWatchlist]); // Forcing re-render
+      setWatchlist([...updatedWatchlist]);
       await AsyncStorage.setItem("watchlist", JSON.stringify(updatedWatchlist));
       console.log("Added to Watchlist:", movie.title);
     } catch (error) {
       console.error("Error adding to Watchlist:", error);
     }
   };
-
+  // Add Movie to Favorites
   const addToFavorites = async (movie) => {
+    // Check if the movie is already in the favorites
     if (favorites.some((item) => item.id === movie.id)) {
       console.log("Movie already in Favorites");
       return;
     }
-
+    // Add to Favorites
     try {
       const updatedFavorites = [...favorites, movie];
-      setFavorites([...updatedFavorites]); // Forcing re-render
+      setFavorites([...updatedFavorites]);
       await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
       console.log("Added to Favorites:", movie.title);
     } catch (error) {
@@ -90,19 +92,23 @@ export default function Home() {
   const isInFavorites = (movie) =>
     favorites.some((item) => item.id === movie.id);
 
+  // Home Screen
   return (
     <View style={styles.wrapper}>
-      
       <Text style={styles.topTenTitle}>Swipe Movies, are you ready?</Text>
 
       {loading ? (
         <ActivityIndicator size="large" color="yellow" />
       ) : movies.length > 0 ? (
+        // Swiper Feature
         <Swiper
           cards={movies}
           renderCard={(movie) => (
             <View style={localStyles.card}>
-              <Text style={styles.test}> ⓘ Swipe any Direction to view another movie!</Text>
+              <Text style={styles.test}>
+                {" "}
+                ⓘ Swipe any Direction to view another movie!
+              </Text>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate("MovieDetail", { movie: movie })
@@ -121,7 +127,7 @@ export default function Home() {
               <Text style={localStyles.overview}>{movie.overview}</Text>
 
               <View style={localStyles.buttonsContainer}>
-                {/* Watchlist Button */}
+                {/* Buttons for Watchlist and Favorites */}
                 <TouchableOpacity
                   onPress={() => addToWatchlist(movie)}
                   style={[
@@ -131,13 +137,10 @@ export default function Home() {
                   disabled={isInWatchlist(movie)}
                 >
                   <Text style={localStyles.buttonText}>
-                    {isInWatchlist(movie)
-                      ? "In Watchlist"
-                      : "Add to Watchlist"}
+                    {isInWatchlist(movie) ? "In Watchlist" : "Add to Watchlist"}
                   </Text>
                 </TouchableOpacity>
 
-                {/* Favorites Button */}
                 <TouchableOpacity
                   onPress={() => addToFavorites(movie)}
                   style={[
@@ -147,9 +150,7 @@ export default function Home() {
                   disabled={isInFavorites(movie)}
                 >
                   <Text style={localStyles.buttonText}>
-                    {isInFavorites(movie)
-                      ? "In Favorites"
-                      : "Add to Favorites"}
+                    {isInFavorites(movie) ? "In Favorites" : "Add to Favorites"}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -162,7 +163,6 @@ export default function Home() {
       ) : (
         <Text style={styles.noResults}>No movies to display</Text>
       )}
-      
     </View>
   );
 }
@@ -179,7 +179,6 @@ const localStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 15,
     marginTop: -50,
-    
   },
   poster: {
     width: 300,
@@ -203,7 +202,7 @@ const localStyles = StyleSheet.create({
   },
   buttonsContainer: {
     position: "absolute",
-    bottom: '20%',
+    bottom: "20%",
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%",
@@ -232,5 +231,4 @@ const localStyles = StyleSheet.create({
     backgroundColor: "gray",
     opacity: 0.7,
   },
-  
 });

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { Image } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles";
 import { getTopTenMovies } from "../api";
 import { useNavigation } from "@react-navigation/native";
@@ -66,6 +65,7 @@ export default function TopTen() {
     await AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
   };
 
+  // Top Ten Screen
   return (
     <View style={styles.wrapper}>
       <Text style={styles.topTenTitle}>Top 10 Movies</Text>

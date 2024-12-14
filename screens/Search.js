@@ -9,11 +9,11 @@ import {
   StyleSheet,
 } from "react-native";
 import styles from "../styles";
-import { LinearGradient } from "expo-linear-gradient";
 import { searchMovies } from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
+// Search Function
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -42,7 +42,7 @@ export default function Search() {
     fetchLists();
   }, []);
 
-  // Search Function
+  // Handle Search
   const handleSearch = async (query) => {
     setSearchQuery(query);
 
@@ -89,6 +89,7 @@ export default function Search() {
     await AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
   };
 
+  // Search Screen
   return (
     <View style={styles.wrapper}>
       <Text style={styles.topTenTitle}>Search Movies</Text>

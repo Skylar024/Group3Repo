@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
@@ -21,6 +20,7 @@ export default function Watchlist() {
   // Use Navigation
   const navigation = useNavigation();
 
+  // Fetch Watchlist
   useFocusEffect(
     React.useCallback(() => {
       const fetchWatchlist = async () => {
@@ -39,6 +39,7 @@ export default function Watchlist() {
     }, [])
   );
 
+  // Remove Movie from Watchlist
   const removeFromWatchlist = async (movieId) => {
     try {
       const updatedWatchlist = watchlist.filter(
@@ -59,6 +60,7 @@ export default function Watchlist() {
     );
   }
 
+  // Watchlist Screen
   return (
     <View style={styles.wrapper}>
       <Text style={styles.topTenTitle}>My Watchlist</Text>
@@ -87,6 +89,7 @@ export default function Watchlist() {
               </TouchableOpacity>
               <Text style={localStyles.movieTitle}>{item.title}</Text>
 
+              {/* Delete Button */}
               <TouchableOpacity
                 style={styles.deleteButton}
                 onPress={() => removeFromWatchlist(item.id)}

@@ -1,24 +1,23 @@
 import React from "react";
 import {
-  View,
   Text,
   Image,
   ScrollView,
   StyleSheet,
-  Touchable,
   TouchableOpacity,
   Linking,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 export default function MovieDetail({ route }) {
   const { movie } = route.params;
 
+  // Provide a link to TMDB
   const handleTMDBPress = () => {
     const movieUrl = `https://www.themoviedb.org/movie/${movie.id}`;
     Linking.openURL(movieUrl);
   };
 
+  // Movie Detail Screen
   return (
     <ScrollView style={localStyles.container}>
       <Image
@@ -35,6 +34,8 @@ export default function MovieDetail({ route }) {
         Release Date: {movie.release_date}
       </Text>
       <Text style={localStyles.overview}>{movie.overview}</Text>
+
+      {/* TMDB Link */}
       <TouchableOpacity onPress={handleTMDBPress}>
         <Text style={[localStyles.link, { marginBottom: 20 }]}>
           View on TMDB

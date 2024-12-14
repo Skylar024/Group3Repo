@@ -4,19 +4,23 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { Alert, Platform } from "react-native";
+import { InfoIconWithWave } from "./infoIconWithWave";
+
+// Screen Imports
 import Home from "./screens/Home";
 import Watchlist from "./screens/Watchlist";
 import Favorites from "./screens/Favorites";
 import TopTen from "./screens/TopTen";
 import Search from "./screens/Search";
 import MovieDetail from "./screens/MovieDetail";
-import { Alert, Platform } from "react-native";
-import { InfoIconWithWave } from "./infoIconWithWave";
 
+// Navigation Variables
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
+// Information Button
 function showInfoAlert() {
   Alert.alert(
     "App Info",
@@ -30,7 +34,6 @@ function showInfoAlert() {
 }
 
 // Screen Stacks
-
 function HomeStack() {
   return (
     <Stack.Navigator>
@@ -118,16 +121,16 @@ function FavoritesStack() {
 
 const screenOptions = {
   headerStyle: {
-    backgroundColor: "#460000", // Header background color
+    backgroundColor: "#460000",
   },
-  headerTintColor: "#FABC3F", // Header text color
+  headerTintColor: "#FABC3F",
   tabBarStyle: {
-    backgroundColor: "#460000", // Bottom tab background color
+    backgroundColor: "#460000",
   },
   tabBarActiveTintColor: "#FABC3F",
   tabBarInactiveTintColor: "#8f091b",
   drawerStyle: {
-    backgroundColor: "#460000", // Drawer background color
+    backgroundColor: "#460000",
   },
   drawerActiveTintColor: "#FABC3F",
   drawerInactiveTintColor: "#8f091b",
@@ -137,6 +140,7 @@ const screenOptions = {
 export default function App() {
   return (
     <NavigationContainer>
+      {/* iOS Navigation */}
       {Platform.OS === "ios" ? (
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -167,6 +171,7 @@ export default function App() {
           <Tab.Screen name="Favorites" component={FavoritesStack} />
         </Tab.Navigator>
       ) : (
+        // Android and Web Navigation
         <Drawer.Navigator
           screenOptions={({ route }) => ({
             ...screenOptions,

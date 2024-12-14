@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
@@ -21,6 +20,7 @@ export default function Favorites() {
   // Use Navigation
   const navigation = useNavigation();
 
+  // Fetch Favorites
   useFocusEffect(
     React.useCallback(() => {
       const fetchFavorites = async () => {
@@ -39,6 +39,7 @@ export default function Favorites() {
     }, [])
   );
 
+  // Remove Movie from Favorites
   const removeFromFavorites = async (movieId) => {
     try {
       const updatedFavorites = favorites.filter(
@@ -58,7 +59,7 @@ export default function Favorites() {
       </View>
     );
   }
-
+  // Favorites Screen
   return (
     <View style={styles.wrapper}>
       <Text style={styles.topTenTitle}>My Favorites</Text>
@@ -87,6 +88,7 @@ export default function Favorites() {
               </TouchableOpacity>
               <Text style={localStyles.movieTitle}>{item.title}</Text>
 
+              {/* Delete Button */}
               <TouchableOpacity
                 style={styles.deleteButton}
                 onPress={() => removeFromFavorites(item.id)}
