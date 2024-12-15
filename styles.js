@@ -74,18 +74,11 @@ export default StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
-  noResults: {
-    color: "#FABC3F",
-    fontSize: 20,
-    textAlign: "center",
-  },
-
   buttonText: {
     color: "white",
     fontSize: 12,
     textAlign: "center",
   },
-
   darkText: {
     color: "black",
   },
@@ -100,7 +93,6 @@ export default StyleSheet.create({
     marginBottom: 20,
     marginTop: 20,
   },
-
   movieItem: {
     marginBottom: 8,
     padding: 8,
@@ -109,12 +101,6 @@ export default StyleSheet.create({
     maxWidth: 125,
     alignItems: "center",
     marginLeft: 30,
-  },
-  movieTitle: {
-    color: "#FABC3F",
-    fontSize: 14,
-    textAlign: "center",
-    marginTop: 50,
   },
   movieImage: {
     height: 150,
@@ -238,12 +224,6 @@ export default StyleSheet.create({
         height: 30,
       },
     }),
-  },
-  buttonText: {
-    //In Search
-    fontSize: 10,
-    color: "black",
-    fontWeight: "bold",
   },
   disabledButton: {
     backgroundColor: "gray",
